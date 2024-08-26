@@ -49,17 +49,21 @@ The project follows a clean architecture with a well-defined structure:
 
 ```text
 lib/
-├── cubit/
-│   ├── theme_cubit.dart
-├── styles/
-│   ├── app_theme.dart
-│   ├── theme_manager.dart
-│   ├── base/
-│   │   ├── base_theme.dart
-│   │   ├── properties/
-│   ├── themes/
-│   │   ├── light_theme.dart
-│   │   ├── dark_theme.dart
+├── Config/
+│   ├── simble_bloc_observer.dart
+├── Style/
+│   ├── Theme/
+│   │   ├── Base/
+│   │   │   ├── Properties/...
+│   │   │   ├── base_theme.dart
+│   │   ├── cubit/
+│   │   │   ├── theme_cubit.dart
+│   │   │   ├── theme_state.dart
+│   │   ├── Themes/
+│   │   │   ├── dark_theme.dart
+│   │   │   ├── light_theme.dart
+│   │   ├── app_theme.dart
+│   │   ├── theme_manager.dart
 │   ├── colors.dart
 ├── main.dart
 ```
@@ -67,7 +71,7 @@ lib/
 ### Key Directories
 
 - **cubit/:** Contains `ThemeCubit`, which handles the application's theme state.
-- **styles/:** Holds all the theme-related files, including `app_theme.dart` for theme enumeration, `theme_manager.dart` for managing theme logic, and specific theme files.
+- **Styles/:** Holds all the theme-related files, including `app_theme.dart` for theme enumeration, `theme_manager.dart` for managing theme logic, and specific theme files.
 
 ### Theme Management
 
