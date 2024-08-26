@@ -1,0 +1,29 @@
+name: flutter_theme_config
+description: "A Flutter project that implements a robust theming solution with support for both light and dark themes. The app utilizes the BLoC pattern to manage theme state using a `ThemeCubit` and provides a modular structure for easily adding and customizing themes. With a well-defined structure, the project includes support for dynamic system theme detection and persistence of user preferences using SharedPreferences. Perfect for developers looking to implement flexible and scalable theming solutions in their Flutter applications."
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.3.2 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+    
+  sizer: ^2.0.15
+  flutter_bloc: ^8.1.6
+  equatable:
+  shared_preferences: ^2.3.2
+  
+  cupertino_icons: ^1.0.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
