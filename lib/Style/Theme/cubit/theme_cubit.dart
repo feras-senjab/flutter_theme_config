@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_theme_config/Style/Theme/app_theme.dart';
+import 'package:flutter_theme_config/Style/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:developer' as developer;
 
@@ -15,10 +17,42 @@ class ThemeCubit extends Cubit<ThemeState> with WidgetsBindingObserver {
           appTheme: _getSystemTheme(),
           isUsingSystemTheme: true,
         )) {
+    // Set the system UI overlay style to fit initial theme
+    _setSystemUIOverlayStyle(
+        state.appTheme == AppTheme.light ? Brightness.light : Brightness.dark);
     // Add observer to listen for system theme changes
     _addObserver();
     // Load the theme during initialization
     _loadTheme();
+  }
+
+  // Set the system UI overlay style to fit brightness
+  void _setSystemUIOverlayStyle(Brightness brightness) {
+    SystemUiOverlayStyle overlayStyle = SystemUiOverlayStyle(
+      statusBarColor: brightness == Brightness.light
+          ? AppColors.systemStatusBarColorLight
+          : AppColors.systemStatusBarColorDark,
+      systemNavigationBarColor: brightness == Brightness.light
+          ? AppColors.systemNavigationBarColorLight
+          : AppColors.systemNavigationBarColorDark,
+      statusBarIconBrightness:
+          brightness == Brightness.light ? Brightness.dark : Brightness.light,
+      statusBarBrightness: brightness, // For iOS
+      systemNavigationBarIconBrightness: brightness == Brightness.light
+          ? Brightness.dark
+          : Brightness.light, // For Android
+    );
+
+    SystemChrome.setSystemUIOverlayStyle(overlayStyle);
+  }
+
+  // Override the emit function to update the system UI overlay style
+  @override
+  void emit(ThemeState state) {
+    super.emit(state);
+    // Call the function to set the system UI overlay style when theme changes
+    _setSystemUIOverlayStyle(
+        state.appTheme == AppTheme.light ? Brightness.light : Brightness.dark);
   }
 
   /// Adds the observer to listen for system theme changes
@@ -33,7 +67,8 @@ class ThemeCubit extends Cubit<ThemeState> with WidgetsBindingObserver {
 
   @override
   void didChangePlatformBrightness() {
-    emit(state.copyWith(appTheme: _getSystemTheme(), isUsingSystemTheme: true));
+    var theme = _getSystemTheme();
+    emit(state.copyWith(appTheme: theme, isUsingSystemTheme: true));
   }
 
   @override
